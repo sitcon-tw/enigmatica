@@ -45,7 +45,7 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chats[chat_id] = {
         'story_parts': story_parts,
         'current_index': 0,
-        'displayed_text': f'> {story_parts[0]}' if len(story_parts) > 0 else '',
+        'displayed_text': story_parts[0] if len(story_parts) > 0 else '',
         'story_number': story_number
     }
     
@@ -63,7 +63,8 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     
     message = await update.message.reply_text(
         chats[chat_id]['displayed_text'],
-        reply_markup=reply_markup
+        reply_markup=reply_markup,
+        parse_mode='Markdown'
     )
     active_messages[chat_id] = message.message_id
 
@@ -88,10 +89,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         story_parts = chat_data['story_parts']
         
         if current_idx < len(story_parts):
-            lines = chat_data['displayed_text'].split('\n')
-            if lines and lines[-1].startswith('> '):
-                lines[-1] = lines[-1][2:]
-            chat_data['displayed_text'] = '\n'.join(lines) + '\n' + f'> {story_parts[current_idx]}'
+            chat_data['displayed_text'] += '\n' + story_parts[current_idx]
             
             if current_idx + 1 < len(story_parts):
                 progress = f"({current_idx + 1}/{len(story_parts)})"
@@ -107,7 +105,8 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             
             await query.edit_message_text(
                 text=chat_data['displayed_text'],
-                reply_markup=reply_markup
+                reply_markup=reply_markup,
+                parse_mode='Markdown'
             )
         else:
             keyboard = [
@@ -117,12 +116,9 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             await query.edit_message_reply_markup(reply_markup=reply_markup)
             
     elif callback_data.startswith('done_'):
-        lines = chat_data['displayed_text'].split('\n')
-        if lines and lines[-1].startswith('> '):
-            lines[-1] = lines[-1][2:]
-        final_text = '\n'.join(lines) + '\n\n✨ 故事完成 ✨'
+        final_text = chat_data['displayed_text'] + '\n\n✨ 故事完成 ✨'
         
-        await query.edit_message_text(text=final_text)
+        await query.edit_message_text(text=final_text, parse_mode='Markdown')
         
         await save_completed_story(chat_id, chat_data['story_number'])
         
