@@ -42,10 +42,11 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         except:
             pass
     
+    story_title = get_data.story[story_number]['title']
     chats[chat_id] = {
         'story_parts': story_parts,
         'current_index': 0,
-        'displayed_text': story_parts[0] if len(story_parts) > 0 else '',
+        'displayed_text': f"📚 {story_title}\n\n{story_parts[0]}" if len(story_parts) > 0 else f"📚 {story_title}\n\n",
         'story_number': story_number
     }
     

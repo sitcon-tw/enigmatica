@@ -3,7 +3,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandle
 from dotenv import load_dotenv
 from os import getenv
 from pathlib import Path
-from command import start, ans, debug, button_callback, stories, view_story_callback
+from command import start, ans, debug, button_callback, stories, view_story_callback, incomplete_story_callback
 from utils import get_data
 
 load_dotenv(dotenv_path=Path('.env'))
@@ -24,6 +24,7 @@ def main():
     # app.add_handler(CommandHandler("debug", debug))
     app.add_handler(CallbackQueryHandler(lambda update, context: (
         view_story_callback(update, context) if update.callback_query.data.startswith('view_story_')
+        else incomplete_story_callback(update, context) if update.callback_query.data.startswith('incomplete_story_')
         else button_callback(update, context)
     )))
 
