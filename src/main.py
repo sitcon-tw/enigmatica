@@ -1,9 +1,9 @@
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler
 from dotenv import load_dotenv
 from os import getenv
 from pathlib import Path
-from command import start, ans, debug
+from command import start, ans, debug, button_callback
 from utils import get_data
 
 load_dotenv(dotenv_path=Path('.env'))
@@ -21,6 +21,7 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("ans", ans))
     app.add_handler(CommandHandler("debug", debug))
+    app.add_handler(CallbackQueryHandler(button_callback))
 
     print('Bot starting...')
     app.run_polling()

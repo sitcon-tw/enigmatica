@@ -43,7 +43,7 @@ async def get_story(story_number: str):
         story_content = await read_file(f'src/data/story/{file_path}')
         if not story_content:
             return "Story content is empty or file not found."
-        return story_content
+        return story_content.split("---")
     except KeyError:
         print(f"Story number {story_number} not found in data.")
         return "Story not found."
