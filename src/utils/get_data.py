@@ -1,17 +1,23 @@
 import json
 import asyncfile
 
-data = None
 
-async def init():
+data = None
+story = None
+
+def init():
     """Initialize the story data."""
     global data
+    global story
     try:
-        async with asyncfile.open('src/data/story.json', 'r', encoding='utf-8') as f:
-            data = await f.read()
+        with open('src/data/story.json', 'r', encoding='utf-8') as f:
+            story = f.read()    
+        with open('src/data/data.json', 'r', encoding='utf-8') as f:
+            data = f.read()
+        story = json.loads(story)
         data = json.loads(data)
-    except FileNotFoundError:
-        print("Story data file not found.")
+    except FileNotFoundError as e:
+        print("Data file not found." + e)
         return {}
     except json.JSONDecodeError:
         print("Error decoding JSON from story data file.")
@@ -30,10 +36,10 @@ async def read_file(file_path: str) -> str:
         return ""
 
 async def get_story(story_number: str):
-    global data
+    global story
     file_path = None
     try:
-        file_path = data[story_number]["file"]
+        file_path = story[story_number]["file"]
         story_content = await read_file(f'src/data/story/{file_path}')
         if not story_content:
             return "Story content is empty or file not found."
