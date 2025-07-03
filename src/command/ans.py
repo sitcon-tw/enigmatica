@@ -73,7 +73,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         story_parts = chat_data['story_parts']
         
         if current_idx < len(story_parts):
-            chat_data['displayed_text'] += '\n\n' + story_parts[current_idx]
+            chat_data['displayed_text'] += '\n' + story_parts[current_idx]
             
             if current_idx + 1 < len(story_parts):
                 keyboard = [
@@ -102,6 +102,5 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             text=chat_data['displayed_text'] + '\n\n✨ 故事完成 ✨'
         )
         
-        # Optional: Clean up chat data
         if chat_id in chats:
             del chats[chat_id]
