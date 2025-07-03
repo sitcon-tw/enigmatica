@@ -3,7 +3,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from dotenv import load_dotenv
 from os import getenv
 from pathlib import Path
-from command import start, ans
+from command import start, ans, debug
 from utils import get_data
 
 load_dotenv(dotenv_path=Path('.env'))
@@ -20,6 +20,7 @@ def main():
     print('Setting up command handlers...')
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("ans", ans))
+    app.add_handler(CommandHandler("debug", debug))
 
     print('Bot starting...')
     app.run_polling()
