@@ -1,6 +1,6 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
-import time
+import random
 
 from utils import get_data
 
@@ -23,7 +23,17 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     story_number = get_story_number_from_password(answer)
     
     if story_number is None:
-        return await update.message.reply_text('找不到這個欸')
+        no_story = [
+            "「打錯了，請再來一次，還是腦袋也出 bug 了」-- OsGa",
+            "「真的沒有人可以理解我嗎......」-- 康喔",
+            "「真相就藏在每一個線索中。」-- Denny",
+            "「每一則訊息的背後，都藏著說不出口的故事。」-- 橘子",
+            "「只要相信就做得到。」-- 柴柴",
+            "「為甚麼沒有約我去吃海底撈!!!」-- Ricky",
+            "「獻出心臟，找出真相吧。」-- windless",
+            "「只要想做，全世界總有人幫你達成。」-- 咪路"
+            ]
+        return await update.message.reply_text(random.choice(no_story) + "\n(你輸入的東西肯定錯了)")
 
     chat_id = update.effective_chat.id
     

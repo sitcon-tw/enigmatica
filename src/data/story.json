@@ -1,42 +1,42 @@
 {
     "1": {
-        "title": "火藥",
+        "title": "SCYTALE",
         "file": "1.txt"
     },
     "2": {
-        "title": "飛機",
+        "title": "GIT",
         "file": "2.txt"
     },
     "3": {
-        "title": "墜落",
+        "title": "AAC",
         "file": "3.txt"
     },
     "4": {
-        "title": "標籤",
+        "title": "METAR",
         "file": "4.txt"
     },
     "5": {
-        "title": "秘密",
+        "title": "FLIGHTRADAR",
         "file": "5.txt"
     },
     "6": {
-        "title": "媒體",
+        "title": "INSTAGRAM",
         "file": "6.txt"
     },
     "7": {
-        "title": "程式碼",
+        "title": "PYTHON",
         "file": "7.txt"
     },
     "8": {
-        "title": "密碼",
+        "title": "ASCII",
         "file": "8.txt"
     },
     "9": {
-        "title": "約定",
+        "title": "MAZE_1",
         "file": "9.txt"
     },
     "10": {
-        "title": "真相",
+        "title": "MAZE_2",
         "file": "10.txt"
     }
 }
