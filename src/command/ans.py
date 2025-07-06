@@ -19,7 +19,7 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if len(context.args) == 0:
         return await update.message.reply_text('你的東西勒?')
     
-    answer = context.args[0]
+    answer = ' '.join(context.args)
     story_number = get_story_number_from_password(answer)
     
     if story_number is None:
