@@ -11,7 +11,6 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     global chats
     
     user = update.effective_user
-    print(f"User {user.username or user.first_name} (ID: {user.id}) used /ans command")
     
     def get_story_number_from_password(text: str):
         for i in get_data.data:
@@ -20,10 +19,16 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return None
 
     if len(context.args) == 0:
+        print(f"User {user.username or user.first_name} (ID: {user.id}) used /ans command - no password provided")
         return await update.message.reply_text('你的東西勒?')
     
     answer = ' '.join(context.args)
     story_number = get_story_number_from_password(answer)
+    
+    if story_number is None:
+        print(f"User {user.username or user.first_name} (ID: {user.id}) used /ans command - wrong password: '{answer}'")
+    else:
+        print(f"User {user.username or user.first_name} (ID: {user.id}) used /ans command - correct password: '{answer}' -> story {story_number}")
     
     if story_number is None:
         no_story = [
