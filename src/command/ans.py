@@ -139,7 +139,17 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         
         await query.edit_message_text(text=final_text, parse_mode='Markdown')
         
+        user = update.effective_user
+        story_number = chat_data['story_number']
+        story_title = get_data.story[story_number]['title']
+        print(f"User {user.username or user.first_name} (ID: {user.id}) completed story {story_number}: '{story_title}'")
+        
         await save_completed_story(chat_id, chat_data['story_number'])
+        
+        # Log all completed stories for this user
+        completed_stories = await get_user_completed_stories(chat_id)
+        completed_titles = [get_data.story[s]['title'] for s in completed_stories if s in get_data.story]
+        print(f"User {user.username or user.first_name} (ID: {user.id}) has completed {len(completed_stories)} stories: {completed_titles}")
         
         if chat_id in chats:
             del chats[chat_id]
