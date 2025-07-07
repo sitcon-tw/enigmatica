@@ -2,6 +2,9 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user = update.effective_user
+    print(f"User {user.username or user.first_name} (ID: {user.id}) used /start command")
+    
     help_text = """
 📖 <b>前情提要</b>
 【突發】SITCON創辦人康喔疑似帶走J0711黑盒子　警方已展開追查

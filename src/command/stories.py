@@ -4,6 +4,9 @@ from utils import get_data
 from .ans import get_user_completed_stories
 
 async def stories(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user = update.effective_user
+    print(f"User {user.username or user.first_name} (ID: {user.id}) used /stories command")
+    
     chat_id = update.effective_chat.id
     completed_stories = await get_user_completed_stories(chat_id)
     

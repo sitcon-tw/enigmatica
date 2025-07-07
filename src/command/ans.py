@@ -10,6 +10,9 @@ active_messages = {}
 async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     global chats
     
+    user = update.effective_user
+    print(f"User {user.username or user.first_name} (ID: {user.id}) used /ans command")
+    
     def get_story_number_from_password(text: str):
         for i in get_data.data:
             if get_data.data[i] == text:
