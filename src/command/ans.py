@@ -146,7 +146,12 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     elif callback_data.startswith('done_'):
         final_text = chat_data['displayed_text'] + '\n\n✨ 故事完成 ✨'
         
-        await query.edit_message_text(text=final_text)
+        try:
+            await query.edit_message_text(text=final_text)
+        except BadRequest as e:
+            if "Message is not modified" not in str(e):
+                print(f"Error editing final message: {e}")
+            # Silently ignore "Message is not modified" errors
         
         user = update.effective_user
         story_number = chat_data['story_number']
