@@ -25,6 +25,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 【提示 | SCYTALE】康喔跟柴柴常常傳遞一個棒子，也不確定是什麼
 
 【提示 | GIT】與康喔看著眼前的機器發呆，可能有什麼重要的線索。
+             https://camp-git-leak-game.joingame.cc/
 
 【提示 | AAC】咪路在 EC329 病房看著康喔留下來的痕跡，嘆了一口氣。
 
