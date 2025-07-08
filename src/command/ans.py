@@ -82,8 +82,7 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     
     message = await update.message.reply_text(
         chats[chat_id]['displayed_text'],
-        reply_markup=reply_markup,
-        parse_mode='Markdown'
+        reply_markup=reply_markup
     )
     active_messages[chat_id] = message.message_id
 
@@ -124,8 +123,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             
             await query.edit_message_text(
                 text=chat_data['displayed_text'],
-                reply_markup=reply_markup,
-                parse_mode='Markdown'
+                reply_markup=reply_markup
             )
         else:
             keyboard = [
@@ -137,7 +135,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     elif callback_data.startswith('done_'):
         final_text = chat_data['displayed_text'] + '\n\n✨ 故事完成 ✨'
         
-        await query.edit_message_text(text=final_text, parse_mode='Markdown')
+        await query.edit_message_text(text=final_text)
         
         user = update.effective_user
         story_number = chat_data['story_number']
