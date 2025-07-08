@@ -33,6 +33,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                https://docs.google.com/spreadsheets/d/1IgHEe1CqywQ38NXDWRFw4pvTMX3j0xcW9EB_whIJ1QI/
 
 【提示 | FLIGHTRADAR】Windless 看著一堆航線紀錄，整理著每個航線的資料。 
+                     https://my.flightradar24.com/SITCON_Camp2025
 
 【提示 | INSTAGRAM】橘子看著 INSTAGRAM 小編發出來的訊息，持續思考著訊息的正確性，還有那藏在文字間的意涵。
 
