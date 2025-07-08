@@ -32,7 +32,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 【提示 | METAR】窗外下起了大雷雨，Windless看著快被悶壞的柴柴說：我們等等就會到涼快一點的地方了！雖然那邊似乎會下小雨，但能見度可是一個讚啊。
                https://docs.google.com/spreadsheets/d/1IgHEe1CqywQ38NXDWRFw4pvTMX3j0xcW9EB_whIJ1QI/
 
-【提示 | FLIGHTRADAR】Windless 看著一堆航線紀錄，整理著每個航線的資料。 
+【提示 | FLIGHTRADAR】Windless 看著一堆航線紀錄，整理著每個航線的資料，上面小小寫了康喔在民國 58 年 6 月 7 號早上 9 點，吃了個漢堡。
                      https://my.flightradar24.com/SITCON_Camp2025
 
 【提示 | INSTAGRAM】橘子看著 INSTAGRAM 小編發出來的訊息，持續思考著訊息的正確性，還有那藏在文字間的意涵。
