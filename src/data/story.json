@@ -32,11 +32,7 @@
         "file": "8.txt"
     },
     "9": {
-        "title": "MAZE_1",
+        "title": "MAZE",
         "file": "9.txt"
-    },
-    "10": {
-        "title": "MAZE_2",
-        "file": "10.txt"
     }
 }
