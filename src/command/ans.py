@@ -1,5 +1,6 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
+from telegram.error import BadRequest
 import random
 
 from utils import get_data
@@ -121,16 +122,26 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             
             reply_markup = InlineKeyboardMarkup(keyboard)
             
-            await query.edit_message_text(
-                text=chat_data['displayed_text'],
-                reply_markup=reply_markup
-            )
+            try:
+                await query.edit_message_text(
+                    text=chat_data['displayed_text'],
+                    reply_markup=reply_markup
+                )
+            except BadRequest as e:
+                if "Message is not modified" not in str(e):
+                    print(f"Error editing message: {e}")
+                # Silently ignore "Message is not modified" errors
         else:
             keyboard = [
                 [InlineKeyboardButton("完成 (100%)", callback_data=f'done_{chat_id}')]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
-            await query.edit_message_reply_markup(reply_markup=reply_markup)
+            try:
+                await query.edit_message_reply_markup(reply_markup=reply_markup)
+            except BadRequest as e:
+                if "Message is not modified" not in str(e):
+                    print(f"Error editing message reply markup: {e}")
+                # Silently ignore "Message is not modified" errors
             
     elif callback_data.startswith('done_'):
         final_text = chat_data['displayed_text'] + '\n\n✨ 故事完成 ✨'
