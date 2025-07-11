@@ -29,7 +29,7 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if story_number is None:
         print(f"User {user.username or user.first_name} (ID: {user.id}) used /ans command - wrong password: '{answer}'")
     else:
-        print(f"User {user.username or user.first_name} (ID: {user.id}) used /ans command - correct password: '{answer}' -> story {story_number}")
+        print(f"User {user.username or user.first_name} (ID: {user.id}) used /ans command - correct password: '*****' -> story {story_number}")
     
     if story_number is None:
         no_story = [
