@@ -77,7 +77,7 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reply_markup = InlineKeyboardMarkup(keyboard)
     else:
         keyboard = [
-            [InlineKeyboardButton("完成 (100%)", callback_data=f'done_{chat_id}')]
+            [InlineKeyboardButton("點我完成故事", callback_data=f'done_{chat_id}')]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -117,7 +117,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
                 ]
             else:
                 keyboard = [
-                    [InlineKeyboardButton("完成 (100%)", callback_data=f'done_{chat_id}')]
+                    [InlineKeyboardButton("點我完成故事", callback_data=f'done_{chat_id}')]
                 ]
             
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -133,7 +133,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
                 # Silently ignore "Message is not modified" errors
         else:
             keyboard = [
-                [InlineKeyboardButton("完成 (100%)", callback_data=f'done_{chat_id}')]
+                [InlineKeyboardButton("點我完成故事", callback_data=f'done_{chat_id}')]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             try:
