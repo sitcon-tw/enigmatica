@@ -7,6 +7,7 @@ from utils import get_data
 
 chats = {}
 active_messages = {}
+user_sessions = {}
 
 async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     global chats
@@ -62,7 +63,9 @@ async def ans(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             pass
     
     story_title = get_data.story[story_number]['title']
+    user_sessions[chat_id] = user
     chats[chat_id] = {
+        'user': user,
         'story_parts': story_parts,
         'current_index': 0,
         'displayed_text': f"📚 {story_title}\n\n{story_parts[0]}" if len(story_parts) > 0 else f"📚 {story_title}\n\n",
@@ -158,10 +161,10 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         story_title = get_data.story[story_number]['title']
         print(f"User {user.username or user.first_name} (ID: {user.id}) completed story {story_number}: '{story_title}'")
         
-        await save_completed_story(chat_id, chat_data['story_number'])
+        await save_completed_story(user, chat_data['story_number'])
         
         # Log all completed stories for this user
-        completed_stories = await get_user_completed_stories(chat_id)
+        completed_stories = await get_user_completed_stories(user)
         completed_titles = [get_data.story[s]['title'] for s in completed_stories if s in get_data.story]
         print(f"User {user.username or user.first_name} (ID: {user.id}) has completed {len(completed_stories)} stories: {completed_titles}")
         
@@ -169,8 +172,10 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             del chats[chat_id]
         if chat_id in active_messages:
             del active_messages[chat_id]
+        if chat_id in user_sessions:
+            del user_sessions[chat_id]
 
-async def save_completed_story(user_id, story_number):
+async def save_completed_story(user, story_number):
     import json
     import os
     
@@ -183,12 +188,27 @@ async def save_completed_story(user_id, story_number):
         else:
             user_data = {}
         
-        user_id_str = str(user_id)
-        if user_id_str not in user_data:
-            user_data[user_id_str] = {'completed_stories': []}
+        user_key = str(user.id)
+        if user_key not in user_data:
+            user_data[user_key] = {
+                'user_info': {
+                    'id': user.id,
+                    'username': user.username,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name
+                },
+                'completed_stories': []
+            }
+        else:
+            user_data[user_key]['user_info'] = {
+                'id': user.id,
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name
+            }
         
-        if story_number not in user_data[user_id_str]['completed_stories']:
-            user_data[user_id_str]['completed_stories'].append(story_number)
+        if story_number not in user_data[user_key]['completed_stories']:
+            user_data[user_key]['completed_stories'].append(story_number)
         
         with open(user_data_file, 'w', encoding='utf-8') as f:
             json.dump(user_data, f, ensure_ascii=False, indent=2)
@@ -196,7 +216,7 @@ async def save_completed_story(user_id, story_number):
     except Exception as e:
         print(f"Error saving user data: {e}")
 
-async def get_user_completed_stories(user_id):
+async def get_user_completed_stories(user):
     import json
     import os
     
@@ -207,9 +227,9 @@ async def get_user_completed_stories(user_id):
             with open(user_data_file, 'r', encoding='utf-8') as f:
                 user_data = json.load(f)
             
-            user_id_str = str(user_id)
-            if user_id_str in user_data:
-                return user_data[user_id_str].get('completed_stories', [])
+            user_key = str(user.id)
+            if user_key in user_data:
+                return user_data[user_key].get('completed_stories', [])
         
         return []
     except Exception as e:

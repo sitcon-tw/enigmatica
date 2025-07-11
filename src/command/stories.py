@@ -7,8 +7,7 @@ async def stories(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
     print(f"User {user.username or user.first_name} (ID: {user.id}) used /stories command")
     
-    chat_id = update.effective_chat.id
-    completed_stories = await get_user_completed_stories(chat_id)
+    completed_stories = await get_user_completed_stories(user)
     
     keyboard = []
     for story_id in get_data.story:
